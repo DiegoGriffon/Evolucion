@@ -6,8 +6,8 @@
 # Valores de los parámetros
 Fitness_AA = 1
 Fitness_Aa = 0.95
-Fitness_aa = 0.90
-Tamaño_Efectivo = 20
+Fitness_aa = 0.9
+Tamaño_Efectivo = 100
 Repeticiones = 10
 
 # Condiciones iniciales
@@ -20,13 +20,13 @@ Duracion = 120
 Deriva_SN <- function(w11, w12, w22, po, N, Generaciones) {
   p <- c(po)
   for (t in 1:Generaciones) {
-    a1 <- 0   # Simula efecto de la deriva
+    A <- 0   # Simula efecto de la deriva
     for (i in 1:(2 * N)) {
       if (runif(1) < p[t]) {
-        a1 <- a1 + 1
+        A <- A + 1
       }
     } # Termina efecto de la deriva
-    pd <- a1 / (2 * N) # Simula efecto de la Selección, sobre el resultado de la Deriva
+    pd <- A / (2 * N) # Simula efecto de la Selección, sobre el resultado de la Deriva
     wbar <- pd^2 * w11 + 2 * pd * (1 - pd) * w12 + (1 - pd)^2 * w22
     pprima <- (pd * w11 + (1 - pd) * w12) * pd / wbar # Termina efecto de la Selección
     p <- c(p, pprima)
@@ -49,7 +49,7 @@ plot(0:Duracion, Resultados[, 1],
      col = "blue", 
      ylim = c(0, 1),
      xlab = "Generaciones", 
-     ylab = "Frecuencia del alelo a1", 
+     ylab = "Frecuencia del alelo A", 
      main = "Modelo de Deriva Genética \n y Selección Natural")
 for (i in 2:Repeticiones) {
   lines(0:Duracion, Resultados[, i], col = "blue")
