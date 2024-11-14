@@ -27,8 +27,8 @@ Deriva_SN <- function(w11, w12, w22, po, N, Generaciones) {
       }
     } # Termina efecto de la deriva
     pd <- A / (2 * N) # Simula efecto de la Selección, sobre el resultado de la Deriva
-    wbar <- pd^2 * w11 + 2 * pd * (1 - pd) * w12 + (1 - pd)^2 * w22
-    pprima <- (pd^2 * w11 +  pd * (1 - pd) * w12 ) / wbar # Termina efecto de la Selección
+    w_barra <- pd^2 * w11 + 2 * pd * (1 - pd) * w12 + (1 - pd)^2 * w22
+    pprima <- (pd^2 * w11 +  pd * (1 - pd) * w12 ) / w_barra # Termina efecto de la Selección
     p <- c(p, pprima)
   }
   return(p)
