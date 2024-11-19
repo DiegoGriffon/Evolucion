@@ -17,7 +17,7 @@ p <- 0.1  # Frecuencia inicial del alelo A
 q <- 0.9  # Frecuencia inicial del alelo a
 
 # Parámetros:
-s1 <- 0  # Coeficiente de selección para AA
+s1 <- 0.0  # Coeficiente de selección para AA
 s2 <- 0.1  # Coeficiente de selección para Aa
 s3 <- 0.2  # Coeficiente de selección para aa
 
@@ -25,8 +25,8 @@ s3 <- 0.2  # Coeficiente de selección para aa
 Generaciones <- 100  # Número de generaciones a simular
 
 # Función para calcular el fitness medio:
-Fitness_Promedio <- function(p, q, s, t) {
-  p^2 * (1-s1) + 2 * p * q * (1 - s2) + q^2 * (1 - s3)
+Fitness_Promedio <- function(p, q, s) {
+  p^2 * (1 - s1) + 2 * p * q * (1 - s2) + q^2 * (1 - s3)
 }
 
 # Vectores para almacenar las frecuencias a lo 
@@ -38,10 +38,10 @@ q_valores[1] <- q
 
 # Simulación a lo largo de las generaciones:
 for (gen in 2:Generaciones) {
-  w_bar <- Fitness_Promedio(p, q, s, t)
-  f_AA <- p^2*(1 - s1) / w_bar
-  f_Aa <- 2 * p * q * (1 - s2) / w_bar
-  f_aa <- q^2 * (1 - s3) / w_bar
+  w_barra <- Fitness_Promedio(p, q, s)
+  f_AA <- p^2*(1 - s1) / w_barra
+  f_Aa <- 2 * p * q * (1 - s2) / w_barra
+  f_aa <- q^2 * (1 - s3) / w_barra
   
   p <- f_AA + 0.5 * f_Aa
   q <- f_aa + 0.5 * f_Aa
@@ -51,14 +51,14 @@ for (gen in 2:Generaciones) {
 }
 
 # Resultados:
-data <- data.frame(Generación = 1:Generaciones, Frecuencia_A = p_valores, Frecuencia_a = q_valores)
+Resultados <- data.frame(Generación = 1:Generaciones, Frecuencia_A = p_valores, Frecuencia_a = q_valores)
 
-print(data)
+print(Resultados)
 
 # Gráfico de las frecuencias alélicas:
 library(ggplot2)
 
-ggplot(data, aes(x = Generación)) +
+ggplot(Resultados, aes(x = Generación)) +
   geom_line(aes(y = Frecuencia_A, color = "Frecuencia A")) +
   geom_line(aes(y = Frecuencia_a, color = "Frecuencia a")) +
   labs(title = "Evolución de las Frecuencias Alélicas", y = "Frecuencia", color = "Alelo") +
