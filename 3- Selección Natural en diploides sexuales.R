@@ -11,22 +11,21 @@
 #  Un locus (2 alelos)
 #  Fitnesses constantes
 
-
 # Condiciones iniciales:
 p <- 0.1  # Frecuencia inicial del alelo A
 q <- 0.9  # Frecuencia inicial del alelo a
 
 # Parámetros:
-R11 <- 3    # Fitness de AA
-R12 <- 2.5  # Fitness de Aa
-R22 <- 2    # Finess de aa
+RAA <- 3    # Fitness de AA
+RAa <- 2.5  # Fitness de Aa
+Raa <- 2    # Finess de aa
 
 # Tiempo a simular:
 Generaciones <- 100  # Número de generaciones a simular
 
 # Función para calcular el fitness media:
 Fitness_Promedio <- function(p, q) {
-  p^2 * R11 + 2 * p * q * R12 + q^2 * R22
+  p^2 * RAA + 2 * p * q * RAa + q^2 * Raa
 }
 
 # Vectores para almacenar las frecuencias a 
@@ -36,13 +35,12 @@ q_valores <- numeric(Generaciones)
 p_valores[1] <- p
 q_valores[1] <- q
 
-
 # Simulación a lo largo de las generaciones:
 for (gen in 2:Generaciones) {
   w_barra <- Fitness_Promedio(p, q)
-  f_AA <- p^2*R11 / w_barra
-  f_Aa <- 2 * p * q * R12 / w_barra
-  f_aa <- q^2 * R22 / w_barra
+  f_AA <- p^2 * RAA / w_barra
+  f_Aa <- 2 * p * q * RAa / w_barra
+  f_aa <- q^2 * Raa / w_barra
   
   p <- f_AA + 0.5 * f_Aa
   q <- f_aa + 0.5 * f_Aa
