@@ -25,7 +25,7 @@ R22 <- 2    # Finess de aa
 Generaciones <- 100  # Número de generaciones a simular
 
 # Función para calcular el fitness media:
-Fitness_Promedio <- function(p, q, s, t) {
+Fitness_Promedio <- function(p, q) {
   p^2 * R11 + 2 * p * q * R12 + q^2 * R22
 }
 
@@ -39,10 +39,10 @@ q_valores[1] <- q
 
 # Simulación a lo largo de las generaciones:
 for (gen in 2:Generaciones) {
-  w_bar <- Fitness_Promedio(p, q, s, t)
-  f_AA <- p^2*R11 / w_bar
-  f_Aa <- 2 * p * q * R12 / w_bar
-  f_aa <- q^2 * R22 / w_bar
+  w_barra <- Fitness_Promedio(p, q)
+  f_AA <- p^2*R11 / w_barra
+  f_Aa <- 2 * p * q * R12 / w_barra
+  f_aa <- q^2 * R22 / w_barra
   
   p <- f_AA + 0.5 * f_Aa
   q <- f_aa + 0.5 * f_Aa
@@ -52,17 +52,21 @@ for (gen in 2:Generaciones) {
 }
 
 # Resultados:
-data <- data.frame(Generación = 1:Generaciones, Frecuencia_A = p_valores, Frecuencia_a = q_valores)
+Resultados <- data.frame(Generación = 1:Generaciones, 
+                         Frecuencia_A = p_valores, 
+                         Frecuencia_a = q_valores)
 
-print(data)
+print(Resultados)
 
 # Gráfico de las frecuencias alélicas:
 library(ggplot2)
 
-ggplot(data, aes(x = Generación)) +
+ggplot(Resultados, aes(x = Generación)) +
   geom_line(aes(y = Frecuencia_A, color = "Frecuencia A")) +
   geom_line(aes(y = Frecuencia_a, color = "Frecuencia a")) +
-  labs(title = "Evolución de las Frecuencias Alélicas", y = "Frecuencia", color = "Alelo") +
+  labs(title = "Evolución de las Frecuencias Alélicas", 
+       y = "Frecuencia", 
+       color = "Alelo") +
   theme_minimal()
 
 # Ojo: Si se va a correr de nuevo, es importante asegurarse
@@ -70,3 +74,4 @@ ggplot(data, aes(x = Generación)) +
 
 # Ejercicio: conseguir una configuración de Fitnesses que conduzca
 # a un polimorfismo estale (equilibrio interior estable)
+
