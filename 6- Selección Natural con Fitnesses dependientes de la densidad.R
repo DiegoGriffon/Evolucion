@@ -31,7 +31,11 @@ N_aa <- 1000  # Individuos iniciales del genotipo aa
 Generaciones <- 300
 
 # Vecto para almacenar resultados:
-Resultados <- data.frame(generacion = 1:Generaciones,N_total = NA, N_AA = NA, N_Aa = NA, N_aa = NA)
+Resultados <- data.frame(generacion = 1:Generaciones,
+                         N_total = NA, 
+                         N_AA = NA, 
+                         N_Aa = NA, 
+                         N_aa = NA)
 
 # Simulación:
 for (t in 1:Generaciones) {
@@ -49,10 +53,6 @@ for (t in 1:Generaciones) {
   N_Aa <-  Lambda_Aa * N_Aa
   N_aa <-  Lambda_aa * N_aa
   
-  #N_AA <- N_AA + Lambda_AA * N_AA
-  #N_Aa <- N_Aa + Lambda_Aa * N_Aa
-  #N_aa <- N_aa + Lambda_aa * N_aa
-  
   # Almacenar los resultados:
   Resultados[t, ] <- c(t, N_total, N_AA, N_Aa, N_aa)
 }
@@ -62,11 +62,11 @@ for (t in 1:Generaciones) {
 library(reshape2)
 # Convertir el objeto resultados en un data frame
 ?melt
-resultados_long <- melt(Resultados, id.vars = "generacion")
+resultados_Dada_Frame <- melt(Resultados, id.vars = "generacion")
 
 library(ggplot2)
 
-ggplot(resultados_long, aes(x = generacion, y = value, color = variable)) +
+ggplot(resultados_Dada_Frame, aes(x = generacion, y = value, color = variable)) +
   geom_line() +
   labs(title = "Simulación de Selección Natural \n   Dependiente de la Densidad",
        x = "Generación",
@@ -76,4 +76,5 @@ ggplot(resultados_long, aes(x = generacion, y = value, color = variable)) +
 
 # Ojo: Si se va a correr de nuevo, es importante asegurarse
 # de actualizar los tamaños iniciales de las poblaciones.
+
 
