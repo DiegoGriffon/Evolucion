@@ -1,5 +1,4 @@
 
-
 ##################################################
 #    Selección Natural en diploides sexuales     #
 #   Fitnesses dependientes de las frecuencias    #
@@ -25,7 +24,7 @@ saa <- 1  # Coeficiente de selección dependiente de la frecuencia genotipo aa
 Generaciones <- 50  # Número de generaciones a simular
 
 # Función para calcular el fitness medio:
-Fitness_Promedio <- function(p, q, k) {
+Fitness_Promedio <- function(p, q) {
   f_AA <- p^2
   f_Aa <- 2 * p * q
   f_aa <- q^2
@@ -50,7 +49,7 @@ for (gen in 2:Generaciones) {
   w_AA <- 1 - sAA * f_AA
   w_Aa <- 1 - sAa * f_Aa
   w_aa <- 1 - saa * f_aa
-  w_bar <- Fitness_Promedio(p, q, k)
+  w_bar <- Fitness_Promedio(p, q)
   
   f_AA <- f_AA * w_AA / w_bar
   f_Aa <- f_Aa * w_Aa / w_bar
@@ -65,7 +64,9 @@ for (gen in 2:Generaciones) {
 
 # Resultados:
 
-data <- data.frame(Generación = 1:Generaciones, Frecuencia_A = p_valores, Frecuencia_a = q_valores)
+data <- data.frame(Generación = 1:Generaciones, 
+                   Frecuencia_A = p_valores, 
+                   Frecuencia_a = q_valores)
 
 print(data)
 
