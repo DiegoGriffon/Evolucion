@@ -12,6 +12,10 @@
 
 # Función para simular un paso generacional 
 # en la población:
+
+#Comando para hacer el muestreo intergeneracional
+?sample
+
 Deriva_Una_Generacion <- function(p, N) {
   # p: frecuencia del alelo A en la generación actual
   # N: tamaño de la población
@@ -47,7 +51,10 @@ for (t in 2:(Generaciones+1)) {
 }
 
 # Visualizar los resultados:
-plot(0:Generaciones, p, type = "l", xlab = "Generación", ylab = "Frecuencia del alelo A",
+plot(0:Generaciones, p, 
+     type = "l", 
+     xlab = "Generación", 
+     ylab = "Frecuencia del alelo A",
      main = "Simulación de Deriva Genética")
 
 # Ejercicio: correr la simulación para diferentes valores del
