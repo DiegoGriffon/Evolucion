@@ -1,6 +1,6 @@
 
 ##################################################
-#          Selección Natural y Deriva            #
+#          Deriva y Selección Natural            #
 ##################################################
 
 # Valores de los parámetros
@@ -17,19 +17,21 @@ p_inicial = 0.5
 Duracion = 120
 
 # Definición de la función Deriva_SN
-Deriva_SN <- function(w11, w12, w22, po, N, Generaciones) {
-  p <- c(po)
+Deriva_SN <- function(wAA, wAa, waa, p0, N, Generaciones) {
+  p <- c(p0)
   for (t in 1:Generaciones) {
-    A <- 0   # Simula efecto de la deriva
-    for (i in 1:(2 * N)) {
-      if (runif(1) < p[t]) {
+    A <- 0   # Se simula el efecto de la deriva
+    for (i in 1:(2*N)) {
+      if (runif(1) <= p[t]) {
         A <- A + 1
       }
     } # Termina efecto de la deriva
-    pd <- A / (2 * N) # Simula efecto de la Selección, sobre el resultado de la Deriva
-    w_barra <- pd^2 * w11 + 2 * pd * (1 - pd) * w12 + (1 - pd)^2 * w22
-    pprima <- (pd^2 * w11 +  pd * (1 - pd) * w12 ) / w_barra # Termina efecto de la Selección
-    p <- c(p, pprima)
+    p_Deriva <- A / (2 * N) 
+    # Se simula el efecto de la Selección, sobre el resultado de la Deriva
+    w_barra <- p_Deriva^2 * wAA + 2 * p_Deriva * (1 - p_Deriva) * wAa + (1 - p_Deriva)^2 * waa
+    p_Deriva_y_Seleccion <- (p_Deriva^2 * wAA +  p_Deriva * (1 - p_Deriva) * wAa ) / w_barra 
+    # Termina efecto de la Selección
+    p <- c(p, p_Deriva_y_Seleccion)
   }
   return(p)
 }
@@ -39,6 +41,7 @@ set.seed(73)
 
 # Ejecución de la función Deriva_SN para el número de repeticiones estipulado
 Resultados <- matrix(nrow = Duracion+1, ncol = Repeticiones)
+
 for (i in 1:Repeticiones) {
   Resultados[, i] <- Deriva_SN(Fitness_AA, Fitness_Aa, Fitness_aa, p_inicial, Tamaño_Efectivo, Duracion)
 }
@@ -51,6 +54,7 @@ plot(0:Duracion, Resultados[, 1],
      xlab = "Generaciones", 
      ylab = "Frecuencia del alelo A", 
      main = "Modelo de Deriva Genética \n y Selección Natural")
+
 for (i in 2:Repeticiones) {
   lines(0:Duracion, Resultados[, i], col = "blue")
 }
