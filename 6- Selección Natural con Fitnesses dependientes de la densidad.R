@@ -77,4 +77,6 @@ ggplot(resultados_Dada_Frame, aes(x = generacion, y = value, color = variable)) 
 # Ojo: Si se va a correr de nuevo, es importante asegurarse
 # de actualizar los tamaños iniciales de las poblaciones.
 
+# Probar diferentes valores de los parámetros hasta encontrar
+# algunos que aseguren el polimorfismo de la población.
 
