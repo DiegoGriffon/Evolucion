@@ -9,6 +9,7 @@
 Frecuencias <- c(0.5,0.3,0.2) # Piedra, Papel, Tijera
 
 # Frecuencias iniciales  aleatorias:
+
 # set.seed(123)  # Para reproducibilidad
 # Frecuencias <- runif(3) # se asigna de forma aleatoria 
 # las Frecuencias iniciales de las 3 estrategias
@@ -36,10 +37,11 @@ Calcular_Fitness <- function(Frecuencias, Matriz_Pagos) {
   return(Fitness)
 }
 
-# Ecuaciones de los Organismos (ecuaciones dinámicas):
-Organismos <- function(Frecuencias, Fitness) {
+# Ecuación de la dinámica:
+Dinamica <- function(Frecuencias, Fitness) {
   Fitness_Promedio <- sum(Frecuencias * Fitness)  # Aptitud promedio de la población
-  d_Frecuencias <- Frecuencias * (Fitness - Fitness_Promedio)  # Cambio en Frecuenciass
+  d_Frecuencias <- Frecuencias * (Fitness - Fitness_Promedio)  # Cambio en Frecuenciass 
+                                                               # (OJO: en tiempo continuo)
   return(d_Frecuencias)
 }
 
@@ -50,7 +52,7 @@ Resultado[1, ] <- Frecuencias
 # Simulación:
 for (t in 2:Generaciones) {
   Fitness <- Calcular_Fitness(Resultado[t-1, ], Matriz_Pagos)
-  d_Frecuencias <- Organismos(Resultado[t-1, ], Fitness)
+  d_Frecuencias <- Dinamica(Resultado[t-1, ], Fitness)
   Resultado[t, ] <- Resultado[t-1, ] + dt * d_Frecuencias
   
   # Asegurar que las Frecuencias permanezcan entre 0 y 1 y sumen 1
@@ -74,4 +76,11 @@ legend("topright", legend = c("Piedra", "Papel", "Tijera"),
 # Mate choice games, context-dependent good genes, and 
 # genetic cycles in the side-blotched lizard, Uta stansburiana. 
 # Behavioral Ecology and Sociobiology. 49 (2–3): 176–186.
+
+# Deducción de la ecuación dinámica para 
+# haploides en tiempo continuo:
+
+# https://n9.cl/5riiv
+
+# Ojo: Ecuación con el punto rojo
 
